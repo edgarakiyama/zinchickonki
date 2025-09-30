@@ -8,76 +8,21 @@
   <title>zinchickonki.com</title>
 </head>
 
-
 <!doctype html>
-<meta charset="utf-8" />
-<title>zinchickonki</title>
-<style>
-  /* まずはスクロールを禁じない土台に */
-  html, body { margin:0; padding:0; overflow-x:hidden; }
-  body { min-height:100%; }
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>zinchickonki</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
 
-  /* 1画面ヒーロー。モバイルのアドレスバー問題に強い svh を使用 */
-  #logo-anim {
-    position: relative;
-    min-height: 100svh;       /* ここがポイント：固定の height ではなく min-height */
-    width: 100vw;
-    overflow: hidden;          /* 横はみ出し防止。縦スクロールは維持 */
-    z-index: 0;
-  }
-  /* SVGをコンテナいっぱいにフィットさせる */
-  #logo-anim svg{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-  /* もしSVG側で比率が合わない場合は、SVGタグに
-     preserveAspectRatio="xMidYMid slice" を付けると「全面カバー」挙動に */
-  
-  /* 次セクション（これがあるからスクロールできる） */
-  .section {
-    min-height: 100svh;       /* 好みで 60svh などでもOK */
-    display: grid;
-    place-items: center;
-    font: 16px/1.6 system-ui, sans-serif;
-  }
-
-  /* 既存の線アニメ系はそのまま */
-  #logo-anim .st0 {
-    stroke-dasharray: var(--dash, 0);
-    stroke-dashoffset: var(--dash, 0);
-    animation: svg-draw var(--dur, 6s) ease-in-out forwards,
-               svg-float 6s ease-in-out infinite;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  @keyframes svg-draw {
-    from { stroke-dashoffset: var(--dash, 0); }
-    to   { stroke-dashoffset: 0; }
-  }
-  @keyframes svg-float {
-    0% { transform: translate3d(0,0,0); }
-    50% { transform: translate3d(0,-3px,0); }
-    100% { transform: translate3d(0,0,0); }
-  }
-
-  @media (max-width: 768px) {
-    #logo-anim .st0 { stroke-width: 2.2px; }
-    /* ここで回転するならコンテナに当てるのではなく SVG に当てるほうが安全 */
-    /* #logo-anim svg { transform: rotate(-90deg); } */
-  }
-</style>
-<section id="logo-anim">
-  <!-- PC用 -->
-  <svg class="pc-svg" viewBox="0 0 1000 1000">
-    <!-- PC用のパス -->
-  </svg>
-
-  <!-- モバイル用 -->
-  <svg class="mobile-svg" viewBox="0 0 500 500">
-    <?xml version="1.0" encoding="UTF-8"?>
+  <!-- 1画面ヒーロー（SVGを画面いっぱいに表示） -->
+  <section id="logo-hero">
+    <section id="logo-hero" class="full-bleed"></section>
+    <!-- ここにあなたのSVGを貼り付け -->
+     <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 768 3666.4">
   <!-- Generator: Adobe Illustrator 29.3.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 146)  -->
   <defs>
@@ -2514,14 +2459,8 @@
     </g>
   </g>
 </svg>
-    <!-- モバイル用のパス -->
+    <!-- ポイント：width/height 属性は付けず、viewBox と preserveAspectRatio を使う -->
+    <svg viewBox="0 0 1000 3000" preserveAspectRatio="xMidYMid meet" class="hero-svg" aria-hidden="true">
+    <!-- paths ... -->
   </svg>
 </section>
-<svg 
-  viewBox="0 0 1000 1000"
-  preserveAspectRatio="xMidYMid slice"
->
-  <!-- パスとか -->
-</svg>
-
-

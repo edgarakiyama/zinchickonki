@@ -1,39 +1,34 @@
+/* 末尾の余白が出ない土台 */
+html, body { margin:0; padding:0; overflow-x:hidden; }
 
-
-#logo-anim {
-  position: relative;      /* 固定せずに本文の一部にする */
-  width: 100vw;            /* 横幅は画面いっぱい */
-  height: auto;            /* 高さはSVGに合わせる */
-  z-index: 0;              /* 背景なら低め */
-  overflow: hidden;        /* 横スクロール防止 */
+/* full-bleed はそのまま */
+.full-bleed{
+  position:relative;
+  width:100vw;
+  left:50%; right:50%;
+  margin-left:-50vw; margin-right:-50vw;
 }
 
-/* SVGを縦にも伸ばす */
-#logo-anim svg {
-  width: 100%;
-  height: auto;            /* 高さを自動に */
-  display: block;
+/* ---- hero（ポスター型） ---- */
+#logo-hero{ overflow:hidden; }
+/* SVGが“行内要素”のベースライン余白を作らないよう block に */
+.hero-svg{ display:block; width:100%; height:auto; }
+
+/* ---- 下のセクション ---- */
+.content{
+  /* ← これが大きな余白の原因だったので削除（必要なら固定値に） */
+  /* min-height:120svh;  */
+  padding:6rem 6vw;
+  box-sizing:border-box;
+  font:16px/1.7 system-ui, -apple-system, "Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
 }
 
-/* スマホ用 */
-@media (max-width: 768px) {
-  #logo-anim svg {
-    height: auto;          /* モバイルも縦に伸ばす */
-  }
-  #logo-anim .st0 { stroke-width: 2.2px; }
-  #logo-anim {
-  }
-}
+/* セクションの末尾でマージンがはみ出してページ最下部に空白が出るのを防ぐ */
+.content > :last-child { margin-bottom:0; }
 
+/* ページ一番下が少しだけ切れやすい端末向けに微量の余白を足す（任意） */
+body { padding-bottom: 1px; }
 
-/* 768px以下はモバイル表示 */
-@media (max-width: 768px) {
-  .pc-svg { display: none; }
-  .mobile-svg { display: block; }
-}
-
-#logo-anim svg {
-  width: 100vw;
-  height: 100vh;
-  display: block;
-}
+.content, .footer { overflow:auto; }
+.content > :last-child, .footer > :last-child { margin-bottom:0; }
+.content > :first-child, .footer > :first-child { margin-top:0; }
