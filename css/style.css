@@ -1,0 +1,39 @@
+
+
+#logo-anim {
+  position: relative;      /* 固定せずに本文の一部にする */
+  width: 100vw;            /* 横幅は画面いっぱい */
+  height: auto;            /* 高さはSVGに合わせる */
+  z-index: 0;              /* 背景なら低め */
+  overflow: hidden;        /* 横スクロール防止 */
+}
+
+/* SVGを縦にも伸ばす */
+#logo-anim svg {
+  width: 100%;
+  height: auto;            /* 高さを自動に */
+  display: block;
+}
+
+/* スマホ用 */
+@media (max-width: 768px) {
+  #logo-anim svg {
+    height: auto;          /* モバイルも縦に伸ばす */
+  }
+  #logo-anim .st0 { stroke-width: 2.2px; }
+  #logo-anim {
+  }
+}
+
+
+/* 768px以下はモバイル表示 */
+@media (max-width: 768px) {
+  .pc-svg { display: none; }
+  .mobile-svg { display: block; }
+}
+
+#logo-anim svg {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
