@@ -1,10 +1,10 @@
 @charset "utf-8";
 
 @keyframes svg-draw {
-  from {
+  0% {
     stroke-dashoffset: var(--dash, 0);
   }
-  to {
+  100% {
     stroke-dashoffset: 0;
   }
 }
@@ -24,7 +24,6 @@
 .is-in-view {
   stroke-dasharray: var(--dash, 0);
   stroke-dashoffset: var(--dash, 0);
-
   animation: svg-draw var(--dur, 6s) ease-in-out forwards, svg-float 6s ease-in-out infinite;
 
   stroke-linecap: round;

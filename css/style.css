@@ -1,14 +1,81 @@
 html,
 body {
   width: 100%;
-  height: auto;
-  overflow-y: auto;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  overflow-y: scroll;
 }
 
-a:hover{
-  transition-duration: 200ms;
-  opacity: 0.5;
+.loading-wrapper {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 100dvh;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 9999;
+  filter: blur(0px);
+  pointer-events: none;
+}
+
+.loaded .loading-wrapper {
+  opacity: 0;
+  transition: 1.5s opacity, 1.5s filter;
+  filter: blur(10px);
+}
+
+@keyframes loading-anim {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#main-image {
+  filter: blur(10px);
+  transition-duration: 1s;
+  overflow-y: hidden;
+}
+
+.loaded #main-image {
+  filter: blur(0px);
+}
+
+#loading-logo {
+  animation: loading-anim 0.3s ease-in-out forwards;
+  transition: 0.5s filter, 0.5s scale;
+}
+
+.loaded #loading-logo {
+  scale: 1.1 0.95;
+}
+
+@media (max-width: 768px) {
+  #loading-logo {
+    scale: 2;
+  }
+
+  .loaded #loading-logo {
+    scale: 2.1 1.95;
+  }
+}
+
+svg {
+  margin-bottom: -8px;
+}
+
+@media (min-width: 768px) {
+  a {
+    transition: 200ms opacity;
+    opacity: 1;
+  }
+
+  a:hover {
+    opacity: 0.5;
+  }
 }

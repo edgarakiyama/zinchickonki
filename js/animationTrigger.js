@@ -1,10 +1,10 @@
 let animTargetElements = [];
 const threshold = 0.9;
 
-export default function setIntersectionObserver(animClassNames) {
+export default function setIntersectionTrigger(animClassNames) {
   animTargetElements.length = 0;
-  removeEventListener('scroll', onScroll);
-  addEventListener('scroll', onScroll);
+  removeEventListener('scroll', checkIntersection);
+  addEventListener('scroll', checkIntersection);
 
   animClassNames.forEach((animClassName) => {
     document.querySelectorAll(animClassName).forEach((target) => {
@@ -12,15 +12,15 @@ export default function setIntersectionObserver(animClassNames) {
       animTargetElements.push(target);
     });
 
-    onScroll();
+    setTimeout(checkIntersection, 500);
   });
 }
 
-function onScroll() {
+function checkIntersection() {
   animTargetElements.forEach((target) => {
     const interSectionY = window.innerHeight * threshold;
     const targetPosY = target.getClientRects().item(0).y;
-    
+
     if (targetPosY < interSectionY) {
       target.classList.remove('is-out-of-view');
       target.classList.add('is-in-view');
