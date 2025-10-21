@@ -1,37 +1,25 @@
 @charset "utf-8";
 
 @keyframes svg-draw {
-  0% {
+  from {
     stroke-dashoffset: var(--dash, 0);
   }
-  100% {
+  to {
     stroke-dashoffset: 0;
   }
 }
 
-@keyframes svg-float {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, -3px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
 .is-in-view {
+  opacity: 1;
   stroke-dasharray: var(--dash, 0);
   stroke-dashoffset: var(--dash, 0);
-  animation: svg-draw var(--dur, 6s) ease-in-out forwards, svg-float 6s ease-in-out infinite;
-
+  animation: svg-draw var(--dur, 6s) cubic-bezier(0.5, 0, 0.3, 1) forwards;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 1;
 }
 
 .is-out-of-view {
+  transition-duration: 500ms;
   opacity: 0;
 }
 

@@ -1,42 +1,64 @@
-import playPathTrimAnimation from './pathAnimation.js';
 import loadSvg from './svgLoader.js';
-import setIntersectionTrigger from './animationTrigger.js';
+import setPathTrimAnimation from './pathAnimation.js';
+import setElementVisibilityTrigger from './visibilityTrigger.js';
 
-const breakPoint = 768;
-let isSp = window.innerWidth <= breakPoint;
-const spSvgAnimClasses = ['.st7'];
-const pcSvgAnimClasses = ['.st1'];
+const SVG_CONTAINER_ID = 'main-image';
+const LOAD_COMPLETED_CLASS = 'loaded';
+const BREAKPOINT_PX = 768;
+const STATIC_LOADING_DURATION_MS = 500;
+const SVG_ANIM_QUERIES_SP = ['.st4'];
+const SVG_ANIM_QUERIES_PC = ['.st3'];
+let isSp = window.innerWidth <= BREAKPOINT_PX;
 
-addEventListener('DOMContentLoaded', setupSvg());
-addEventListener('resize', () => updateCurrentDevice());
+addEventListener('DOMContentLoaded', () => initializeSvgSetup());
+addEventListener('resize', () => handleResize());
 
-function updateCurrentDevice() {
-  const isNowSp = window.innerWidth <= breakPoint;
-  if (isNowSp === isSp) return;
-  isSp = isNowSp;
+function initializeSvgSetup() {
+  updateDeviceState();
   setupSvg();
 }
 
-function getSvgDataPathAttribute(width) {
-  return width > breakPoint ? 'data-path-pc' : 'data-path-sp';
+function handleResize() {
+  const isNowSp = window.innerWidth <= BREAKPOINT_PX;
+  if (isNowSp !== isSp) {
+    isSp = isNowSp;
+    setupSvg();
+  }
 }
 
 function setupSvg() {
-  document.body.classList.remove('loaded');
-  const svgContainerElement = document.getElementById('main-image');
+  document.body.classList.remove(LOAD_COMPLETED_CLASS);
+  const svgContainerElement = document.getElementById(SVG_CONTAINER_ID);
+  clearSvgContainer(svgContainerElement);
 
-  if (svgContainerElement.hasChildNodes) {
-    svgContainerElement.childNodes.forEach((child) => svgContainerElement.removeChild(child));
+  const animatableQueries = getAnimatableQueries();
+  const svgFilePath = getSvgFilePath(svgContainerElement);
+
+  loadSvg(svgFilePath, svgContainerElement)
+    .then((svgElement) => {
+      setTimeout(() => {
+        setPathTrimAnimation(svgElement, animatableQueries);
+        setElementVisibilityTrigger(animatableQueries);
+        document.body.classList.add(LOAD_COMPLETED_CLASS);
+      }, STATIC_LOADING_DURATION_MS);
+    });
+}
+
+function clearSvgContainer(container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
+}
 
-  const animationTargetClass = isSp ? spSvgAnimClasses : pcSvgAnimClasses;
+function getAnimatableQueries() {
+  return isSp ? SVG_ANIM_QUERIES_SP : SVG_ANIM_QUERIES_PC;
+}
 
-  const svgFilePath = svgContainerElement.getAttribute(getSvgDataPathAttribute(window.innerWidth));
-  loadSvg(svgContainerElement, svgFilePath).then((svgElement) => {
-    setTimeout(()=>{
-    playPathTrimAnimation(svgElement, animationTargetClass);
-    setIntersectionTrigger(animationTargetClass);
-    document.body.classList.add('loaded');
-    },500);
-  });
+function getSvgFilePath(container) {
+  const attr = (window.innerWidth > BREAKPOINT_PX) ? 'data-path-pc' : 'data-path-sp';
+  return container.getAttribute(attr);
+}
+
+function updateDeviceState() {
+  isSp = window.innerWidth <= BREAKPOINT_PX;
 }

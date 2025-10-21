@@ -1,8 +1,8 @@
-const baseAnimationDurationSec = 1;
+const BASE_DURATION_SEC = 1;
 
-export default function playPathTrimAnimation(svgElement, animClassNames) {
-  animClassNames.forEach((animClassName) => {
-    const paths = svgElement.querySelectorAll(animClassName);
+export default function setPathTrimAnimation(svgElement, animatableQueries) {
+  animatableQueries.forEach((animatableQuery) => {
+    const paths = svgElement.querySelectorAll(animatableQuery);
     if (!paths) return;
 
     const pathLengthData = getPathLength(paths);
@@ -11,9 +11,9 @@ export default function playPathTrimAnimation(svgElement, animClassNames) {
       const length = pathLengthData.lengths[i] || 0;
       path.style.setProperty('--dash', length);
 
-      const dur =
-        (1.5 + baseAnimationDurationSec * (length / (pathLengthData.max || 1))).toFixed(2) + 's';
-      path.style.setProperty('--dur', dur);
+      const animDuration =
+        (1.5 + BASE_DURATION_SEC * (length / (pathLengthData.max || 1))).toFixed(2) + 's';
+      path.style.setProperty('--dur', animDuration);
 
       const delayScale = svgElement.parentElement.getAttribute('data-delay-scale') || 0.05;
       const baseDelayTime = svgElement.parentElement.getAttribute('data-base-delay') || 0;

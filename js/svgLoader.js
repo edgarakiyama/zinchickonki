@@ -1,4 +1,4 @@
-export default async function loadSvg(container, svgFilePath) {
+export default async function loadSvg(svgFilePath, container) {
   try {
     const response = await fetch(svgFilePath);
     if (!response.ok) {
@@ -6,7 +6,6 @@ export default async function loadSvg(container, svgFilePath) {
         new Error(`Failed to load SVG: ${response.status} ${response.statusText}`),
       );
     }
-
     const svgText = await response.text();
     container.innerHTML = svgText;
     return container.querySelector('svg');
