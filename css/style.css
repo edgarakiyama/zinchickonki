@@ -7,6 +7,13 @@ body {
   overflow-y: scroll;
 }
 
+.text{
+  position:absolute;
+  top:0;
+  left:0;
+
+}
+
 .loading-wrapper {
   display: flex;
   align-items: center;
@@ -67,6 +74,7 @@ body {
 
 svg {
   margin-bottom: -8px;
+  background-color: white;
 }
 
 @media (min-width: 768px) {
